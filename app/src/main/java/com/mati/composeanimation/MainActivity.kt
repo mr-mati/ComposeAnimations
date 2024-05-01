@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +45,12 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(false)
                     }
 
-                    val borderRound by animateIntAsState(targetValue = if (isRound) 100 else 0)
+                    val borderRound by animateIntAsState(targetValue = if (isRound) 100 else 0,
+                        animationSpec = tween(
+                            durationMillis = 3000,
+                            delayMillis = 1000
+                        )
+                    )
 
                     Box(
                         modifier = Modifier
