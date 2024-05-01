@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
                     Box(
                         modifier = Modifier
-                            .size(200.dp)
+                            .size(300.dp)
                             .background(color)
                     )
 
