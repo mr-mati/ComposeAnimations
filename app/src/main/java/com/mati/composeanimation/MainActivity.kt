@@ -3,8 +3,10 @@ package com.mati.composeanimation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.animateInt
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,7 +47,33 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(false)
                     }
 
-                    val borderRound by animateIntAsState(targetValue = if (isRound) 100 else 0,
+                    val transient = updateTransition(targetState = isRound, label = null)
+
+                    val borderRound by transient.animateInt(
+                        transitionSpec = { tween(200) },
+                        label = "bordarRadius",
+                        targetValueByState = { isRound ->
+                            if (isRound) 100 else 0
+                        }
+                    )
+
+                    val color by transient.animateColor(
+                        transitionSpec = { tween(2000) },
+                        label = "bordarRadius",
+                        targetValueByState = { isRound ->
+                            if (isRound) Color.White else Color.Red
+                        }
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .background(color)
+                            .clip(RoundedCornerShape(borderRound))
+                    )
+
+
+                    /*val borderRound by animateIntAsState(targetValue = if (isRound) 100 else 0,
                         animationSpec = tween(
                             durationMillis = 3000,
                             delayMillis = 1000
@@ -57,7 +85,7 @@ class MainActivity : ComponentActivity() {
                             .size(200.dp)
                             .background(Color.Red)
                             .clip(RoundedCornerShape(borderRound))
-                    )
+                    )*/
 
                     /*AnimatedVisibility(
                         visible = isVisible, modifier = Modifier
